@@ -1,9 +1,27 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
+import { AppService, DataResponse } from './app.service';
 
 describe('AppComponent', () => {
+  // let appServiceSpy = jasmine.createSpyObj('AppService', ['getData']);;
+
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
+  const data:  DataResponse[] = [
+    {
+      name: 'Vasya',
+      surname: 'Pashin'
+    },
+    {
+      name: 'Kolya',
+      surname: 'Mishin'
+    }
+  ];
+
   beforeEach(async () => {
+
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
@@ -11,25 +29,40 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [{ provide: AppService }]
     }).compileComponents();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    expect(component).toBeTruthy();
   });
 
   it(`should have as title 'unit-test-practice'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('unit-test-practice');
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    expect(component.title).toEqual('unit-test-practice');
   });
 
-  it('should render title', () => {
+  it('should h1 contain Hello', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('unit-test-practice app is running!');
+    const h1 = compiled.querySelector('h1');
+    expect(h1?.textContent).toContain('Hello');
   });
+
+  it('should getData was called', async () => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    const appService = fixture.debugElement.injector.get(AppService);
+    let spy = spyOn(appService, "getData").and.returnValue(
+      of(data)
+    );
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.users).toBe(data);
+    });
+  })
 });
