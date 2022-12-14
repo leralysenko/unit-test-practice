@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { mapRxJs } from './functions-observable';
+import { Data } from './mock-data';
 
 @Injectable({
   providedIn: 'root'
@@ -8,16 +9,7 @@ import { mapRxJs } from './functions-observable';
 
 export class AppService {
 
-  public data: DataResponse[] = [
-    {
-      name: 'Vasya',
-      surname: 'Pashin'
-    },
-    {
-      name: 'Kolya',
-      surname: 'Mishin'
-    }
-  ];
+  public data: DataResponse[] = Data;
 
   constructor() { }
 

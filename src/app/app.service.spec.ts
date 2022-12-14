@@ -1,24 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AppService, DataResponse } from './app.service';
-import { marbles } from 'rxjs-marbles/jasmine';
-import { map, of } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 import { mapRxJs } from './functions-observable';
+import { Data } from './mock-data';
 
 describe('AppService', () => {
   let service: AppService;
   let testScheduler: TestScheduler;
-  const data = [
-    {
-      name: 'Vasya',
-      surname: 'Pashin'
-    },
-    {
-      name: 'Kolya',
-      surname: 'Mishin'
-    }
-  ];
+  const data = Data;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

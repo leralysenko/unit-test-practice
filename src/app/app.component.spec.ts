@@ -3,22 +3,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { AppService, DataResponse } from './app.service';
+import { Data } from './mock-data';
 
 describe('AppComponent', () => {
   // let appServiceSpy = jasmine.createSpyObj('AppService', ['getData']);;
 
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
-  const data:  DataResponse[] = [
-    {
-      name: 'Vasya',
-      surname: 'Pashin'
-    },
-    {
-      name: 'Kolya',
-      surname: 'Mishin'
-    }
-  ];
+  const data:  DataResponse[] = Data;
 
   beforeEach(async () => {
 
@@ -53,7 +45,7 @@ describe('AppComponent', () => {
     expect(h1?.textContent).toContain('Hello');
   });
 
-  it('should getData was called', async () => {
+  it('getData should be called during initialization', async () => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
     const appService = fixture.debugElement.injector.get(AppService);
